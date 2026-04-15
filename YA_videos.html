@@ -4,30 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Video Gallery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
-        .gallery { display: flex; flex-wrap: wrap; gap: 15px; }
-        .video { width: calc(33.333% - 15px); background-color: #fff; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        iframe { width: 100%; height: 200px; border: none; border-radius: 5px; }
-        h3 { padding: 10px; text-align: center; }
+        body { font-family: Arial, sans-serif; }
+        .gallery { display: flex; flex-wrap: wrap; gap: 10px; }
+        .video-item { position: relative; cursor: pointer; }
+        .video-item img { width: 100%; max-width: 250px; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); justify-content: center; align-items: center; }
+        .modal iframe { width: 80%; height: 80%; }
+        .close { position: absolute; top: 10px; right: 20px; color: white; font-size: 30px; cursor: pointer; }
     </style>
 </head>
 <body>
-    <h1>Interactive Video Gallery</h1>
+    <h1>Video Gallery</h1>
     <div class="gallery">
-        <div class="video">
-            <iframe src="https://www.youtube.com/embed/VIDEO_ID_1" allowfullscreen></iframe>
-            <h3>Video Title 1</h3>
+        <div class="video-item" onclick="openModal('https://www.youtube.com/embed/YOUR_VIDEO_ID_1')">
+            <img src="https://img.youtube.com/vi/YOUR_VIDEO_ID_1/0.jpg" alt="Video Thumbnail 1">
         </div>
-        <div class="video">
-            <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" allowfullscreen></iframe>
-            <h3>Video Title 2</h3>
+        <div class="video-item" onclick="openModal('https://www.youtube.com/embed/YOUR_VIDEO_ID_2')">
+            <img src="https://img.youtube.com/vi/YOUR_VIDEO_ID_2/0.jpg" alt="Video Thumbnail 2">
         </div>
-        <div class="video">
-            <iframe src="https://www.youtube.com/embed/VIDEO_ID_3" allowfullscreen></iframe>
-            <h3>Video Title 3</h3>
-        </div>
-        <!-- Add more video entries as needed -->
+        <!-- Add more video items as needed -->
     </div>
+    <div class="modal" id="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <iframe id="videoFrame" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+    <script>
+        function openModal(videoUrl) {
+            const modal = document.getElementById('modal');
+            const videoFrame = document.getElementById('videoFrame');
+            videoFrame.src = videoUrl + '?autoplay=1';
+            modal.style.display = 'flex';
+        }
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            const videoFrame = document.getElementById('videoFrame');
+            videoFrame.src = '';
+            modal.style.display = 'none';
+        }
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        };
+    </script>
 </body>
 </html>
